@@ -7,14 +7,26 @@ var path = require('path');
 app.use(cookieParser());
 
 app.use(bodyParser.json());
-app.use(bodyParser.unlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/', function(req, res){
-    res.send("Olá, mundo");
+    res.render('index.ejs',{});
+});
+
+app.get('/usuarios', function(req, res){
+    res.render('usuarios.ejs',{usuarios:[]});
+});
+
+app.get('/add', function(req,res){
+    res.render('add.ejs');
+});
+
+app.post('/add', function(req,res){
+    console.log("Nome: " + req.body.txtNome + "Email: " + req.body.txtEmail);
 });
 
 app.listen(3000, function(){
