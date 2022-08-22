@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar</title>
-</head>
-<body>
-    <form method="post">
+<%-include('cabecalho.ejs')%>    
+    <form method="post" enctype="multipart/form-data">
         ID: <input type="text" name="txtId" readonly value="<%=Usuario._id%>"><br>
         Nome: <input type="text" name="txtNome" placeholder="Nome" value="<%=Usuario.nome%>"><br>
         Email: <input type="email" name="txtEmail" placeholder="Email" value="<%=Usuario.email%>"><br>
@@ -15,5 +7,4 @@
         Foto: <input type="file" name="txtFoto"><br>
         <input type="submit" name="Editar">
     </form>
-</body>
-</html>
+<%-include('rodape.ejs')%>    
