@@ -1,6 +1,6 @@
-const moongose = require('mongoose');
+const mongoose = require('mongoose');
 const uri = "mongodb://localhost:27017/blog";
 
-mongoose.conect(uri);
+mongoose.connect(uri);
 
 module.exports = mongoose;
