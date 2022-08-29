@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-Parser');
 var path = require('path');
 var Usuario = require('./model/usuario');
+var Artista = require('./model/artista');
 var upload = require('./config/configMulter');
 
 app.use(cookieParser());
@@ -15,20 +16,86 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.get('/artista', function(req,res){
+    Artista.find({}).exec(function(err, docs){
+        res.render('artista/lst.ejs', {Artistas: docs});
+    });
+});
+
+app.post('/artista', function(req, res){
+    Artista.find({nomeArtista: new RegExp(req.body.txtPesquisa, 'gi')}).exec(function(err, docs){
+        res.render('artista/lst.ejs', {Artistas: docs});
+    });
+});
+
+app.get('/artista/add', function(req, res){
+    res.render('artista/add.ejs');
+});
+
+app.post('/artista/add', upload.single("txtFotoArtista"), function(req, res){
+    var artista = new Artista({
+        nomeArtista: req.body.txtNomeArtista,
+        fotoArtista: req.file.filename,
+        datanascArtista: req.body.txtDataNascArtista,
+        descricaoArtista: req.body.txtDescricaoArtista,
+        emailArtista: req.body.txtEmailArtista
+    });
+    artista.save(function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/artista');
+        }
+    });
+});
+
+app.get('/artista/del/:id', function(req, res){
+    Artista.findByIdAndDelete(req.params.id, function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/artista');
+        }
+    });
+});
+
+app.get('/artista/edt/:id', function(req, res){
+    Artista.findById(req.params.id, function(err, docs){
+        if(err){
+            console.log(err);
+        }else{
+            res.render('/artista/edt.ejs', {Artista: docs});
+        }
+    });
+});
+
+app.post('artista/edt/:id', upload.single("txtFotoArtista"), function(req, res){
+    Artista.findByIdAndUpdate(req.params.id, 
+        {
+            nomeArtista: req.body.txtNomeArtista,
+            fotoArtista: req.file.filename,
+            datanascArtista: req.body.txtDataNasArtista,
+            descricaoArtista: req.body.txtDescricaoArtista,
+            emailArtista: req.body.txtEmailArtista
+        }, function(err, docs){
+            res.redirect('/artista');
+        });
+});
+
 app.get('/', function(req, res){
     Usuario.find({}).exec(function(err, docs){
-        res.render('index.ejs',{Usuarios: docs}); 
+        res.render('usuario/index.ejs',{Usuarios: docs}); 
     });
 });
 
 app.post('/', function(req, res){
     Usuario.find({nome: new RegExp(req.body.txtPesquisa, 'gi')}).exec(function(err, docs){
-        res.render('index.ejs', {Usuarios: docs});
+        res.render('usuario/index.ejs', {Usuarios: docs});
     });
 });
 
 app.get('/add', function(req,res){
-    res.render('add.ejs');
+    res.render('usuario/add.ejs');
 });
 
 app.post('/add', upload.single("txtFoto"), function(req,res){
@@ -57,17 +124,17 @@ app.get('/del/:id', function(req, res){
     });
 });
 
-app.get('/edt/:id', function(req,res){
+app.get('usuario/edt/:id', function(req,res){
     Usuario.findById(req.params.id, function(err, docs){
         if(err){
             console.log(err);
         }else{
-            res.render('edt.ejs', {Usuario: docs});
+            res.render('/usuario/edt.ejs', {Usuario: docs});
         }
     });
 });
 
-app.post('/edt/:id', upload.single("txtFoto"), function(req, res){
+app.post('usuario/edt/:id', upload.single("txtFoto"), function(req, res){
     Usuario.findByIdAndUpdate(req.params.id, 
         {
             nome: req.body.txtNome, 

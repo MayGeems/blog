@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artista</title>
+    <style>
+        table, td, th{
+            border : 1px solid black;
+        }
+        th{
+            font-weight: bolder;
+        }
+        td, th{
+            padding: 5px;
+        }
+        .foto{
+            display:inline-block;
+            border-radius: "50%";
+            max-width: "20%";
+            max-height: "20%";
+        }
+        h1, p, .foto{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Artistas</h1><br>
+    <ul>
+        <li><a href="/artista/add">Adicionar</a></li>
+        <li><a href="/artista">Listar</a></li>
+    </ul>
+    <br>
+    <form method="post">
+        Pesquisar:<input type="text" name="txtPesquisa" placeholder="Pesquisar">
+        <input type="submit" value="Pesquisar">
+    </form>
+    <br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NOME</th>
+            <th>FOTO</th>
+            <th>DATA DE NASCIMENTO</th>
+            <th>SOBRE</th>
+            <th>E-MAIL</th>
+            <th>DELETAR</th>
+            <th>EDITAR</th>
+        </tr>
+        <%for(artista of Artistas){%>
+            <tr>
+                <td><%=artista._id%></td>
+                <td><%=artista.nomeArtista%></td>
+                <td><img class="foto" src="/fotos/<%=artista.fotoArtista%>"/></td>
+                <td><%=artista.datanascArtista%></td>
+                <td><%=artista.descricaoArtista%></td>
+                <td><%=artista.emailArtista%></td>
+                <td><a href="/artista/del/<%=artista._id%>">Deletar</td>
+                <td><a href="/artista/edt/<%=artista._id%>">Editar</td>
+            </tr>
+        <%}%>
+    </table>
+</body>
+</html>

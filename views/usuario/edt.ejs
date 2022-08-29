@@ -1,4 +1,4 @@
-<%-include('cabecalho.ejs')%>    
+<%-include('../cabecalho.ejs')%>    
     <form method="post" enctype="multipart/form-data">
         ID: <input type="text" name="txtId" readonly value="<%=Usuario._id%>"><br>
         Nome: <input type="text" name="txtNome" placeholder="Nome" value="<%=Usuario.nome%>"><br>
@@ -7,4 +7,4 @@
         Foto: <input type="file" name="txtFoto"><br>
         <input type="submit" name="Editar">
     </form>
-<%-include('rodape.ejs')%>    
+<%-include('../rodape.ejs')%>    

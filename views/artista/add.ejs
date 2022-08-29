@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artista</title>
+    <style>
+        table, td, th{
+            border : 1px solid black;
+        }
+        th{
+            font-weight: bolder;
+        }
+        td, th{
+            padding: 5px;
+        }
+        .foto{
+            display:inline-block;
+            border-radius: "50%";
+            max-width: "20%";
+            max-height: "20%";
+        }
+        h1, p, .foto{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a href="/artista/add">Adicionar</a></li>
+        <li><a href="/artista">Listar</a></li>
+    </ul>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        Nome: <input type="text" name="txtNomeArtista" placeholder="Nome"><br>
+        Foto: <input type="file" name="txtFotoArtista"><br>
+        Data de nascimento: <input type="date" name="txtDataNascArtista" placeholder="Data de nascimento"><br>
+        Descrição: <input type="text" name="txtDescricaoArtista" placeholder="Descrição sobre o artista"><br>
+        Email: <input type="email" name="txtEmailArtista" placeholder="Email"><br>
+        <input type="submit" name="Adicionar">
+    </form>
+</body>
+</html>
