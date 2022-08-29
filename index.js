@@ -5,6 +5,7 @@ var cookieParser = require('cookie-Parser');
 var path = require('path');
 var Usuario = require('./model/usuario');
 var Artista = require('./model/artista');
+var Obra = require('./model/obra');
 var upload = require('./config/configMulter');
 
 app.use(cookieParser());
@@ -15,6 +16,14 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.get('/obra', function(req , res){
+    res.render('obra/lst.ejs');
+});
+
+app.post('/obra', function(req, res){
+    res.render('obra/lst.ejs');
+});
 
 app.get('/artista', function(req,res){
     Artista.find({}).exec(function(err, docs){
