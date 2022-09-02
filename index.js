@@ -18,11 +18,71 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/obra', function(req , res){
-    res.render('obra/lst.ejs');
+    Obra.find({}).exec(function(err, docs){
+        res.render('obra/lst.ejs', {Obras: docs});    
+    });
 });
 
 app.post('/obra', function(req, res){
-    res.render('obra/lst.ejs');
+    Obra.find({nomeObra: new RegExp(req.body.txtPesquisa, 'gi')}).exec(function(err, docs){
+        res.render('obra/lst.ejs', {Obras: docs});
+    });
+});
+
+app.get('/obra/add', function(req, res){
+    Artista.find({}).then(function(artistas){
+        res.render('obra/add.ejs', {Artistas:artistas});
+    })
+    
+
+});
+
+app.post('/obra/add', upload.single("txtFotoObra"), function(req, res){
+    var obra = new Obra({
+        nomeObra: req.body.txtNomeObra,
+        fotoObra: req.file.filename,
+        dataObra: req.body.txtDataObra,
+        precoObra: req.body.txtPrecoObra
+    });
+    obra.save(function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/obra');
+        }
+    });
+});
+
+app.get('/obra/del/:id', function(req, res){
+    Obra.findByIdAndDelete(req.params.id, function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/obra');
+        }
+    });
+});
+
+app.get('/obra/edt/:id', function(req, res){
+    Obra.findById(req.params.id, function(err, docs){
+        if(err){
+            console.log(err);
+        }else{
+            res.render('/obra/edt.ejs', {Obra: docs});
+        }
+    });
+});
+
+app.post('obra/edt/:id', upload.single('txtFotoObra'), function(req, res){
+    Obra.findByIdAndUpdate(req.params.id, 
+        {
+            nomeObra: req.body.txtNomeObra,
+            fotoObra: req.file.filename,
+            dataObra: req.body.txtDataObra,
+            precoObra: req.body.txtPrecoObra
+        }, function(err, docs){
+            res.redirect('/obra');
+        });
 });
 
 app.get('/artista', function(req,res){

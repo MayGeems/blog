@@ -3,7 +3,11 @@ var ObraSchema = conexao.Schema({
     nomeObra:{type:String},
     fotoObra:{type:String},
     dataObra:{type:String},
-    precoObra:{type:String}
+    precoObra:{type:String},
+    artista:{
+        type:conexao.Schema.Types.ObjectId,
+        ref: "artista"
+    },
 });
 
 module.exports = conexao.model("Obra", ObraSchema);

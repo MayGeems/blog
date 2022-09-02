@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obra</title>
+    <style>
+        table, td, th{
+            font-family: Arial;
+            border : 1px solid black;
+        }
+        th{
+            font-weight: bolder;
+        }
+        td, th{
+            padding: 5px;
+        }
+        .foto{
+            display:inline-block;
+            border-radius: "50%";
+            max-width: "20%";
+            max-height: "20%";
+        }
+        h1, p, .foto, li{
+            font-family: Arial;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a href="/obra/add">Adicionar</a></li>
+        <li><a href="/obra">Listar</a></li>
+    </ul>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        Nome: <input type="text" name="txtNomeObra" placeholder="Nome"><br>
+        Foto: <input type="file" name="txtFotoObra"><br>
+        Data: <input type="date" name="txtDataObra" placeholder="Data de criação"><br>
+        Preço: <input type="text" name="txtPrecoObra" placeholder="Preço da obra"><br>
+        <input type="submit" name="Editar">
+    </form>
+</body>
+</html>
