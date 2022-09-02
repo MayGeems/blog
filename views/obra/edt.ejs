@@ -39,6 +39,11 @@
         Foto: <input type="file" name="txtFotoObra"><br>
         Data: <input type="date" name="txtDataObra" placeholder="Data de criação"><br>
         Preço: <input type="text" name="txtPrecoObra" placeholder="Preço da obra"><br>
+        <select name="txtArtista">
+            <%Artistas.forEach(function(artista){%>
+                <option value="<%=artista._id%>"><%=artista%></option>
+            <%})%>
+        </select>
         <input type="submit" name="Editar">
     </form>
 </body>

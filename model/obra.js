@@ -6,7 +6,7 @@ var ObraSchema = conexao.Schema({
     precoObra:{type:String},
     artista:{
         type:conexao.Schema.Types.ObjectId,
-        ref: "artista"
+        ref: "artista.js"
     },
 });
 

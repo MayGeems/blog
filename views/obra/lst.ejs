@@ -40,6 +40,7 @@
             <th>FOTO</th>
             <th>DATA</th>
             <th>PREÇO</th>
+            <th>ARTISTA</th>
             <th>DELETAR</th>
             <th>EDITAR</th>
         </tr>
@@ -50,6 +51,7 @@
                 <td><img class="foto" src="/fotos/<%=obra.fotoObra%>"/></td>
                 <td><%=obra.dataObra%></td>
                 <td><%=obra.precoObra%></td>
+                <td><%=obra.artista%></td>
                 <td><a href="/obra/del/<%=obra._id%>">Deletar</a></td>
                 <td><a href="/obra/edt/<%=obra._id%>">Editar</a></td>
             </tr>

@@ -31,10 +31,8 @@ app.post('/obra', function(req, res){
 
 app.get('/obra/add', function(req, res){
     Artista.find({}).then(function(artistas){
-        res.render('obra/add.ejs', {Artistas:artistas});
-    })
-    
-
+        res.render('obra/add.ejs', {Artistas: artistas});
+    });
 });
 
 app.post('/obra/add', upload.single("txtFotoObra"), function(req, res){
@@ -42,7 +40,8 @@ app.post('/obra/add', upload.single("txtFotoObra"), function(req, res){
         nomeObra: req.body.txtNomeObra,
         fotoObra: req.file.filename,
         dataObra: req.body.txtDataObra,
-        precoObra: req.body.txtPrecoObra
+        precoObra: req.body.txtPrecoObra,
+        artista: req.body.artista.nomeArtista,
     });
     obra.save(function(err){
         if(err){
