@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artista</title>
+    <title>Estilo</title>
     <style>
         form{
             width: 50% !important;
@@ -38,18 +38,34 @@
     </style>
 </head>
 <body>
+    <h1>Estilos</h1>
     <ul>
-        <li><a href="/artista/add">Adicionar</a></li>
-        <li><a href="/artista">Listar</a></li>
+        <li><a href="/estilo/add">Adicionar</a></li>
+        <li><a href="/estilo">Listar</a></li>
     </ul>
     <br>
-    <form method="post" enctype="multipart/form-data">
-        Nome: <input type="text" name="txtNomeArtista" placeholder="Nome"><br>
-        Foto: <input type="file" name="txtFotoArtista"><br>
-        Data de nascimento: <input type="date" name="txtDataNascArtista" placeholder="Data de nascimento"><br>
-        Descrição: <input type="text" name="txtDescricaoArtista" placeholder="Descrição sobre o artista"><br>
-        Email: <input type="email" name="txtEmailArtista" placeholder="Email"><br>
-        <input type="submit" name="Adicionar">
+    <form method="post">
+        <input type="text" name="txtPesquisa" placeholder="Pesquisar">
+        <input type="submit" value="Pesquisar">
     </form>
+    <br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NOME</th>
+            <th>SOBRE</th>
+            <th>DELETAR</th>
+            <th>EDITAR</th>
+        </tr>
+        <%for(estilo of Estilos){%>
+            <tr>
+                <td><%=estilo._id%></td>
+                <td><%=estilo.nomeEstilo%></td>
+                <td><%=estilo.descricaoEstilo%></td>
+                <td><a href="/estilo/del/<%=estilo._id%>">Deletar</td>
+                <td><a href="/estilo/edt/<%=estilo._id%>">Editar</td>
+            </tr>
+        <%}%>
+    </table>
 </body>
 </html>

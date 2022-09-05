@@ -6,6 +6,7 @@ var path = require('path');
 var Usuario = require('./model/usuario');
 var Artista = require('./model/artista');
 var Obra = require('./model/obra');
+var Estilo = require('./model/estilo');
 var upload = require('./config/configMulter');
 
 app.use(cookieParser());
@@ -17,8 +18,68 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.get('/estilo', function(req, res){
+    Estilo.find({}).exec(function(err, docs){
+        res.render('estilo/lst.ejs', {Estilos: docs});
+    });
+});
+
+app.post('/estilo', function(req, res){
+    Estilo.find({nomeEstilo: new RegExp(req.body.txtPesquisa, 'gi')}).exec(function(err, docs){
+        res.render('estilo/lst.ejs', {Estilos: docs});
+    });
+});
+
+app.get('/estilo/add', function(req, res){
+    res.render('estilo/add.ejs');
+});
+
+app.post('/estilo/add', function(req, res){
+    var estilo = new Estilo({
+        nomeEstilo: req.body.txtNomeEstilo,
+        descricaoEstilo: req.body.txtDescricaoEstilo
+    });
+    estilo.save(function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/estilo');
+        }
+    });
+});
+
+app.get('/estilo/del/:id', function(req, res){
+    Estilo.findByIdAndDelete(req.params.id, function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/estilo');
+        }
+    });
+});
+
+app.get('/estilo/edt/:id', function(req, res){
+    Estilo.findById(req.params.id, function(err, docs){
+        if(err){
+            console.log(err);
+        }else{
+            res.render('estilo/edt.ejs', {Estilo: docs});
+        }
+    });
+});
+
+app.post('/estilo/edt/:id', function(req, res){
+    Estilo.findByIdAndUpdate(req.params.id ,
+        {
+            nomeEstilo: req.body.txtNomeEstilo,
+            descricaoEstilo: req.body.txtDescricaoEstilo
+        }, function(err, docs){
+            res.redirect('/estilo');
+        });
+});
+
 app.get('/obra', function(req , res){
-    Obra.find({}).exec(function(err, docs){
+    Obra.find({}).populate('artista').exec(function(err, docs){
         res.render('obra/lst.ejs', {Obras: docs});    
     });
 });
@@ -41,7 +102,7 @@ app.post('/obra/add', upload.single("txtFotoObra"), function(req, res){
         fotoObra: req.file.filename,
         dataObra: req.body.txtDataObra,
         precoObra: req.body.txtPrecoObra,
-        artista: req.body.artista.nomeArtista,
+        artista: req.body.txtArtista,
     });
     obra.save(function(err){
         if(err){
