@@ -14,9 +14,27 @@
             width: 50% !important;
             margin: auto;
         }
-        h1, li, p, th, table, td{
+        table, td, th{
+            width: 100%;
             text-align: center;
             font-family: Arial;
+            border : 1px solid black;
+        }
+        th{
+            font-weight: bolder;
+        }
+        td, th{
+            padding: 5px;
+        }
+        .foto{
+            display:inline-block;
+            border-radius: "50%";
+            max-width: "20%";
+            max-height: "20%";
+        }
+        h1, p, .foto, li{
+            font-family: Arial;
+            text-align: center;
         }
     </style>
 </head>
@@ -33,29 +51,31 @@
         <input type="submit" value="Pesquisar">
     </form>
     <br>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>NOME</th>
-            <th>FOTO</th>
-            <th>DATA</th>
-            <th>PREÇO</th>
-            <th>ARTISTA</th>
-            <th>DELETAR</th>
-            <th>EDITAR</th>
-        </tr>
-        <%for(obra of Obras){%>
+    <div>
+        <table>
             <tr>
-                <td><%=obra._id%></td>
-                <td><%=obra.nomeObra%></td>
-                <td><img class="foto" src="/fotos/<%=obra.fotoObra%>"/></td>
-                <td><%=obra.dataObra%></td>
-                <td><%=obra.precoObra%></td>
-                <td><%=obra.artista.nomeArtista%></td>
-                <td><a href="/obra/del/<%=obra._id%>">Deletar</a></td>
-                <td><a href="/obra/edt/<%=obra._id%>">Editar</a></td>
+                <th>ID</th>
+                <th>NOME</th>
+                <th>FOTO</th>
+                <th>DATA</th>
+                <th>PREÇO</th>
+                <th>ARTISTA</th>
+                <th>DELETAR</th>
+                <th>EDITAR</th>
             </tr>
-        <%}%>
-    </table>
+            <%for(obra of Obras){%>
+                <tr>
+                    <td><%=obra._id%></td>
+                    <td><%=obra.nomeObra%></td>
+                    <td><img class="foto" src="/fotos/<%=obra.fotoObra%>"/></td>
+                    <td><%=obra.dataObra%></td>
+                    <td><%=obra.precoObra%></td>
+                    <td><%=obra.artista.nomeArtista%></td>
+                    <td><a href="/obra/del/<%=obra._id%>">Deletar</a></td>
+                    <td><a href="/obra/edt/<%=obra._id%>">Editar</a></td>
+                </tr>
+            <%}%>
+        </table>
+    </div>
 </body>
 </html>

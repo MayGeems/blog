@@ -16,10 +16,20 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.set("view engine", "ejs");
 
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(express.static(path.join(__dirname, "public")));
 
+app.get('/', function(req, res){
+    res.render('index.ejs');
+});
+
+app.post('/', function(req, res){
+    res.render('index.ejs');
+});
+
 app.get('/estilo', function(req, res){
-    Estilo.find({}).exec(function(err, docs){
+    Estilo.find({}).populate('artista').exec(function(err, docs){
         res.render('estilo/lst.ejs', {Estilos: docs});
     });
 });
@@ -31,13 +41,16 @@ app.post('/estilo', function(req, res){
 });
 
 app.get('/estilo/add', function(req, res){
-    res.render('estilo/add.ejs');
+    Artista.find({}).then(function(artistas){
+        res.render('estilo/add.ejs', {Artistas: artistas});
+    });
 });
 
 app.post('/estilo/add', function(req, res){
     var estilo = new Estilo({
         nomeEstilo: req.body.txtNomeEstilo,
-        descricaoEstilo: req.body.txtDescricaoEstilo
+        descricaoEstilo: req.body.txtDescricaoEstilo,
+        artista: req.body.txtArtista,
     });
     estilo.save(function(err){
         if(err){
@@ -133,7 +146,7 @@ app.get('/obra/edt/:id', function(req, res){
     });
 });
 
-app.post('obra/edt/:id', upload.single('txtFotoObra'), function(req, res){
+app.post('/obra/edt/:id', upload.single('txtFotoObra'), function(req, res){
     Obra.findByIdAndUpdate(req.params.id, 
         {
             nomeObra: req.body.txtNomeObra,
@@ -198,7 +211,7 @@ app.get('/artista/edt/:id', function(req, res){
     });
 });
 
-app.post('artista/edt/:id', upload.single("txtFotoArtista"), function(req, res){
+app.post('/artista/edt/:id', upload.single("txtFotoArtista"), function(req, res){
     Artista.findByIdAndUpdate(req.params.id, 
         {
             nomeArtista: req.body.txtNomeArtista,
@@ -211,23 +224,23 @@ app.post('artista/edt/:id', upload.single("txtFotoArtista"), function(req, res){
         });
 });
 
-app.get('/', function(req, res){
+app.get('/usuario', function(req, res){
     Usuario.find({}).exec(function(err, docs){
         res.render('usuario/index.ejs',{Usuarios: docs}); 
     });
 });
 
-app.post('/', function(req, res){
+app.post('/usuario', function(req, res){
     Usuario.find({nome: new RegExp(req.body.txtPesquisa, 'gi')}).exec(function(err, docs){
         res.render('usuario/index.ejs', {Usuarios: docs});
     });
 });
 
-app.get('/add', function(req,res){
+app.get('/usuario/add', function(req,res){
     res.render('usuario/add.ejs');
 });
 
-app.post('/add', upload.single("txtFoto"), function(req,res){
+app.post('/usuario/add', upload.single("txtFoto"), function(req,res){
     var usuario = new Usuario({
         nome: req.body.txtNome,
         email: req.body.txtEmail,
@@ -243,7 +256,7 @@ app.post('/add', upload.single("txtFoto"), function(req,res){
     });
 });
 
-app.get('/del/:id', function(req, res){
+app.get('/usuario/del/:id', function(req, res){
     Usuario.findByIdAndDelete(req.params.id, function(err){
         if(err){
             console.log(err);
@@ -253,7 +266,7 @@ app.get('/del/:id', function(req, res){
     });
 });
 
-app.get('usuario/edt/:id', function(req,res){
+app.get('/usuario/edt/:id', function(req,res){
     Usuario.findById(req.params.id, function(err, docs){
         if(err){
             console.log(err);
@@ -263,7 +276,7 @@ app.get('usuario/edt/:id', function(req,res){
     });
 });
 
-app.post('usuario/edt/:id', upload.single("txtFoto"), function(req, res){
+app.post('/usuario/edt/:id', upload.single("txtFoto"), function(req, res){
     Usuario.findByIdAndUpdate(req.params.id, 
         {
             nome: req.body.txtNome, 

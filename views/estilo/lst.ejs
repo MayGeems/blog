@@ -54,6 +54,7 @@
             <th>ID</th>
             <th>NOME</th>
             <th>SOBRE</th>
+            <th>ARTISTAS</th>
             <th>DELETAR</th>
             <th>EDITAR</th>
         </tr>
@@ -62,6 +63,12 @@
                 <td><%=estilo._id%></td>
                 <td><%=estilo.nomeEstilo%></td>
                 <td><%=estilo.descricaoEstilo%></td>
+                
+                <td>
+                    <%for(artista of estilo.artista){%>
+                        <%=artista.nomeArtista%>,<br>
+                    <%}%>
+                </td>
                 <td><a href="/estilo/del/<%=estilo._id%>">Deletar</td>
                 <td><a href="/estilo/edt/<%=estilo._id%>">Editar</td>
             </tr>
