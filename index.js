@@ -256,7 +256,7 @@ app.post('/usuario/add', upload.single("txtFoto"), function(req,res){
     });
 });
 
-app.get('/usuario/del/:id', function(req, res){
+app.get('usuario/del/:id', function(req, res){
     Usuario.findByIdAndDelete(req.params.id, function(err){
         if(err){
             console.log(err);
